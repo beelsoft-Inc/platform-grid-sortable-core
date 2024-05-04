@@ -1,1 +1,63 @@
-# platform-grid-sortable-core
+
+laravel-admin grid-sortable
+======
+
+This extension can help you sort by dragging the rows of the data list, the front end is based on [jQueryUI sortable](https://jqueryui.com/sortable/), and the back end is based on [eloquent-sortable](https://github.com/spatie/eloquent-sortable)
+
+
+![Kapture 2019-06-25 at 10 14 51](https://user-images.githubusercontent.com/1479100/60064224-50b97080-9732-11e9-8023-431fc6fe81a5.gif)
+
+## Installation
+
+```shell
+composer require laravel-admin-ext/grid-sortable "@dev"
+```
+
+Publish asserts
+
+```shell
+php artisan vendor:publish --provider="Tungnt\Admin\GridSortable\GridSortableServiceProvider"
+```
+
+## Usage
+
+Define your model
+
+```php
+<?php
+
+use Illuminate\Database\Eloquent\Model;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
+
+class MyModel extends Model implements Sortable
+{
+    use SortableTrait;
+
+    public $sortable = [
+        'order_column_name' => 'order_column',
+        'sort_when_creating' => true,
+    ];
+}
+```
+
+Use in grid
+
+```php
+$grid = new Grid(new MyModel);
+
+$grid->sortable();
+```
+
+This will add a column to the grid. After dragging one row, a `Save order` button will appear at the top of the grid. Click  to save order.
+
+## Translation
+
+The default text for the button is `Save order`. If you use an other language, such as Simplified Chinese, you can add a translation to the `resources/lang/zh-CN.json` file.
+
+```json
+{
+    "Save order": "save order"
+}
+```
+
